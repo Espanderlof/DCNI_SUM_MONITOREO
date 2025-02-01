@@ -14,6 +14,17 @@ export class PatientMonitorComponent implements OnInit {
     patients: Patient[] = [];
     vitalSigns: Map<number, VitalSigns> = new Map();
     history: VitalSignsRecord[] = [];
+    summaryInfo: { 
+        minutes: number, 
+        seconds: number,
+        nextSummaryMinutes: number,
+        nextSummarySeconds: number 
+    } = { 
+        minutes: 0, 
+        seconds: 0,
+        nextSummaryMinutes: 5,
+        nextSummarySeconds: 0
+    };
 
     constructor(private vitalSignsService: VitalSignsService) {}
 
@@ -24,6 +35,9 @@ export class PatientMonitorComponent implements OnInit {
         );
         this.vitalSignsService.history$.subscribe(
             history => this.history = history
+        );
+        this.vitalSignsService.summary$.subscribe(
+            summary => this.summaryInfo = summary
         );
     }
 
